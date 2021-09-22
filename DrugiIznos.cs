@@ -20,7 +20,7 @@ namespace Bankomat
             InitializeComponent();
         }
 
-        private void btnNazad_Click(object sender, EventArgs e)
+        private void btnNazad_Click(object sender, EventArgs e)     /* prikazi formu Nalog_Korisnika sa pocetnim vrednostima */
         {
             var nalogKorisnika = new Nalog_korisnika();
             this.Hide();
@@ -31,14 +31,14 @@ namespace Bankomat
         {
             var nalogKorisnika = new Nalog_korisnika();
             var transakcije = new Transakcije();
-            decimal iznos = decimal.Parse(txtDrugiIznos.Text);
-            if (StanjeRacuna - iznos >= 0)
+            decimal iznos = decimal.Parse(txtDrugiIznos.Text);      /* kovertuj uneseni string u decimal */
+            if (StanjeRacuna - iznos >= 0)          /* ukoliko je uslov tacan umanji iznos korisnika u bazi i zabelezi transakciju u bazi */
             {
                 transakcije.podizanjeGotovine(iznos, PIN);
                 transakcije.dodajTransakcije(iznos, ID);
             }
-            else { MessageBox.Show("Nedovoljno sredstava na racunu!", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-            this.Hide();
+            else { MessageBox.Show("Nedovoljno sredstava na racunu!", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information); }           /* ukoliko IF uslov nije ispunjen */
+            this.Hide();            /* u svakom slucaju ce sakriti ovu formu i prikazati prethodnu formu, prosledice i podatke korisnika klasi Nalog_Korisnika */
             nalogKorisnika.ID = ID;
             nalogKorisnika.PIN = PIN;
             nalogKorisnika.StanjeRacuna = StanjeRacuna;

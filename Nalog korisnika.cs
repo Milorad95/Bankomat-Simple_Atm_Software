@@ -22,34 +22,35 @@ namespace Bankomat
 
         private void Nalog_korisnika_Load(object sender, EventArgs e)
         {
+            /* pri ucitavanju forme pokazace se trenutni datum i vreme  */
             lblDatum.Text += DateTime.Now.Date.ToShortDateString();
-            lblVreme.Text += DateTime.Now.ToString("t");
-            hideLoad();
+            lblVreme.Text += DateTime.Now.ToString("t");            /* t pokazuje trenutno vreme bez sekundi */
+            hideLoad();                                             /* ova metoda sakriva labele i button-e koje korisniku nisu potrebne ukoliko ih on ne zahteva */
         }
 
         private void btnPonisti_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Close();       /* zatvaranje ove forme */
         }
 
         private void btnPodizanjeGotovine_Click(object sender, EventArgs e)
         {
-            hidePodizanjeGotovine();
+            hidePodizanjeGotovine();        /* sakrivanje labela i button-a koje se ne odnose na podizanje gotovine */
         }
 
         private void Nalog_korisnika_FormClosing(object sender, FormClosingEventArgs e)
         {
             var f1 = new Form1();
-            f1.Show();
+            f1.Show();                      /* prikazuje se forma za unos PIN-a */
         }
 
         private void btn1000_Click(object sender, EventArgs e)
         {
             var transakcije = new Transakcije();
-            if(StanjeRacuna - 1000 >= 0)
+            if(StanjeRacuna - 1000 >= 0)        /* ako je stanje racuna umanjenog za zeljeni iznos veca ili jednaka 0 */
             {
-                transakcije.podizanjeGotovine(1000, PIN);
-                transakcije.dodajTransakcije(1000, ID);
+                transakcije.podizanjeGotovine(1000, PIN);   /* prosledjivanje iznosa za podizanje i PIN-a koji ukazuje koji korisnik podize novac */
+                transakcije.dodajTransakcije(1000, ID);     /* dodavanje transakcije u listu transakcija sa zeljenim iznosom i ID-jem korisnika koji je podigao gotovinu */
             }
             else { MessageBox.Show("Nedovoljno sredstava na racunu!", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information); }
         }
@@ -81,21 +82,21 @@ namespace Bankomat
             var drugiIznos = new DrugiIznos();
             this.Hide();
             drugiIznos.PIN = PIN;
-            drugiIznos.ID = ID;
+            drugiIznos.ID = ID;                     /* prosledjivanje parametara korisnika PIN, ID, StanjeRacuna */
             drugiIznos.StanjeRacuna = StanjeRacuna;
-            drugiIznos.Show();
+            drugiIznos.Show();                      /* prikazi formu za unos drugog iznosa */
         }
 
         private void btnProveraStanja_Click(object sender, EventArgs e)
         {
-            hideProveraStanja();
+            hideProveraStanja();                    /* sakrij labele i button-e koje se ne odnose na proveru stanja */
         }
 
         private void btnNazad_Click(object sender, EventArgs e)
         {
-            hideLoad();
+            hideLoad();             /* sakriva sve labele i button-e i pokazuje pocetne labele i button-e sa izborom provera stanja, transakcija i podizanje gotovine */
         }
-        public void hideLoad()
+        public void hideLoad()      /* metoda koja uspostavlja pocetne vrednosti na formi kao i prilikom logovanja korisnika */
         {
             lblNazad.Hide();
             lblNovac.Hide();
@@ -117,7 +118,7 @@ namespace Bankomat
             btnProveraStanja.Show();
             btnPregledTransakcija.Show();
         }
-        public void hidePodizanjeGotovine()
+        public void hidePodizanjeGotovine()         /* metoda koja pri izboru "Podizanje gotovine" prikazuje iznose i opciju "Drugi iznos" sa button-ima za potvrdu i povratak na prethodi korak*/
         {
             lblNovac.Hide();
             lblProveraStanja.Hide();
@@ -138,7 +139,7 @@ namespace Bankomat
             lblNazad.Show();
             btnNazad.Show();
         }
-        public void hideProveraStanja()
+        public void hideProveraStanja()         /* metoda koja pri izboru "Provera stanja" sakriva sve i pokazuje samo trenutno stanje na racunu i opciju "Nazad" za povratak na pocetni korak */
         {
             lblProveraStanja.Hide();
             lblPregledTransakcjia.Hide();
@@ -158,8 +159,8 @@ namespace Bankomat
         {
             this.Hide();
             var pregledTransakcija = new Pregled_Transakcija();
-            pregledTransakcija.ID = ID;
-            pregledTransakcija.Show();
+            pregledTransakcija.ID = ID; /* prosledi vrednost ID korisnika u klasu pregled transakcija */
+            pregledTransakcija.Show();  /* prikazi formu za pregled transakcija */
         }
     }
 }
